@@ -1,0 +1,55 @@
+<!--
+
+Copyright 2017 Lars Bremer
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+//    Website mit Fehler zur neuen Statusmeldung anzeigen                                           //
+//                                                                                                  //
+//     V1.0      2017-02-27     LB     Initiale Version zum internen Test                           //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <!--Stylesheet-->
+    <?!= HtmlService.createHtmlOutputFromFile('web-site_stylesheet').getContent(); ?>
+  </head>
+  
+  <body class="ERR">
+    <h1>
+    FEHLER - Neuer Status wurde <u>nicht</u> übernommen!
+    </h1>
+    
+    <!--Link zur Hauptseite mit Ubersicht der Eisatzbereitschaft-->
+    <a class="linktomain" href="<?!= getWebUrl() + '?page=standby'; ?>">zur Übersicht</a>
+  
+    <!--Fusszeile mit Name-->
+    <p id="footer">
+      Erzeugt durch 
+      <?!= PropertiesService.getScriptProperties().getProperty('Name'); ?> 
+    </p>
+
+    <!--LIZENZBEDINGUNG - DARF NICHT ENTFERNT WERDEN ! BEGINN -->
+    <p id="TM">
+      <b>FSM15</b> - nach einer Idee von Diedder aus <a href="http://www.ff-appen.de">Appen</a>
+    </p>
+    <!--LIZENZBEDINGUNG - DARF NICHT ENTFERNT WERDEN ! ENDE -->
+  
+  </body>
+</html>

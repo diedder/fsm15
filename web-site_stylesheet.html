@@ -1,0 +1,210 @@
+<!--
+
+Copyright 2017 Lars Bremer
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+//    CSS Stylesheet fuer die Websiten                                                              //
+//                                                                                                  //
+//     V1.0      2017-02-27     LB     Initiale Version zum internen Test                           //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+
+<!DOCTYPE html>
+<!-- jQuery UI styles einbinden -->
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" />
+
+<style>
+  /* Allgemeine Siteneinstellungen */
+  body {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    margin: 0px 00px 0px 30px;
+  }
+  /* Site im Einstz mit rotem Hintergrund */
+  body.onduty{
+    background-color: #FFDDDD
+  }
+  body.OK{
+    background-color: #00FF00
+  }
+  body.ERR{
+    background-color: #FF0000
+  }
+
+  /* Ueberschriften formattieren */
+  h1 {
+    font-size: 32px;
+    font-weight: bold;
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: normal;
+    text-decoration: underline;
+  }
+  h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+
+  /* Navigationsmenue */
+  ul.menu {
+    list-style-type: none;
+    width: 512px;
+    margin: 0px 0px 30px;
+    padding: 0;
+    overflow: hidden;
+    background-color: #D8D8D8;
+  }
+  li.menu {
+    float: left;
+    width: 170px;
+    border-right: 1px solid #FFFFFF;
+  }
+  li.menu:last-child {
+    border-right: none;
+  }
+  li.menu a {
+    display: block;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    padding: 10px 15px 10px 15px;
+  }
+  li.menu a.active {
+    background-color: #000000;   
+    font-weight: bold;
+    color: white;
+  }
+  li.menu a:hover:not(.active) {
+    background-color: #A4A4A4;
+    color: white;
+  }
+  
+  /* Grundeinstellungen Tabellen */
+  table {
+    text-align: center;
+    border: 2px solid black;
+    border-collapse: collapse;
+  }
+  /* spezielles Format fuer Logliste */
+  table.loglist {
+    width: 50%;
+  }
+  /* Alle Kopfzeilen ws/sw */
+  th {
+    font-size: 16px;
+    font-weight: bold;
+    background-color: black;
+    color: white;  
+    padding: 5px 10px 5px 10px;
+  }
+  /* Liste Hoverbar */
+  tr:hover {background-color: #f5f5f5}
+
+  /* Normale Datenzelle */
+  td {
+    padding: 5px;
+    border-bottom: 1px solid #A4A4A4
+  }
+  /* Datenzelle fue Zusammenfassung mit grossen Zahlen */
+  td.bignr {
+    font-size: 20px;
+    font-weight: bold;
+    border: 1px solid black;
+  }
+  /* Datenzelle beim Laden der Site */
+  td.tmp {
+    font-size: 10px;
+    font-style: italic;
+    font-weight: lighter;
+  }
+  /* Datenzellen mit Namen in der Liste rechtsbuendig */
+  td.name {
+    font-weight: bold;
+    text-align: left;
+  }
+
+   /* Hintergrundfarben je nach Status */
+  .S2 {
+    background-color: #74DF00;
+  }
+  .MAPAS2 {
+    font-weight: normal;
+    color: #848484;
+    background-color: #9FF781;
+  }
+  .S3 {
+    background-color: #FACC2E;
+  }
+  .MAPAS3 {
+    font-weight: normal;
+    color: #848484;
+    background-color: #FBE397;
+  }
+  .S6 {
+    background-color: #FA5858;
+  }
+  
+  /* Resetbutton fuer Einsatz beenden */
+  button.reset {
+    width: 300px;
+    margin: 10px 0px 20px 30px;
+    display: inline-block;
+    padding: 8px 20px 8px 20px;
+    font-size: 20px;
+    cursor: pointer;
+    text-align: center;
+    outline: none;
+    color: black;
+    background-color: #FF8000;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 5px #999;
+  }
+  button.reset:hover {
+    background-color: #C8FE2E;
+  }
+  button.reset:active {
+    background-color: #01DF01;
+    box-shadow: 0 2px #666;
+    transform: translateY(2px);
+  }
+  
+  /* Link zur Ubersichtsseite von OK/ERR Seite */
+  a.linktomain {
+    font-size: 20px;
+    cursor: pointer;
+    color: blue;
+  }
+  
+  /* Fusszeile */
+  #footer {
+    font-size: 12px;
+    font-style: italic;
+    font-weight: lighter;
+    margin-top: 30px;
+  }
+  
+  /* Hinweis auf Ursprung */
+  #TM {
+    font-size: 10px;
+    color: blue;  
+    font-variant: small-caps;
+    margin-top: 12px;
+  }
+
+</style>

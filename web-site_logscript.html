@@ -1,0 +1,66 @@
+<!--
+
+Copyright 2017 Lars Bremer
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+//    Dynamische Daten fue Site mit Statuslog laden und Tabelle erstellen                           //
+//                                                                                                  //
+//     V1.0      2017-02-27     LB     Initiale Version zum internen Test                           //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+
+<!DOCTYPE html>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script>
+//Beim Seite Laden beide Listen erstellen
+$(function() {
+  google.script.run.withSuccessHandler(buildLog).getLogData();
+  TimeStamp();
+
+  //Alle 10 Sekunden Daten neu laden
+  setInterval(function(){
+    google.script.run.withSuccessHandler(buildLog).getLogData();
+    TimeStamp();
+  }, 10000);
+});
+
+
+//Zeitstempel fuer Stand der Daten aktualisieren
+function TimeStamp() {
+
+  var d = new Date();
+  //Zeitangabe selbst zusammenbauen, Monate und Stunden/Minuten korrigieren
+  document.getElementById("timestamp").innerHTML =  d.getDate().toString() + '.' +  (d.getMonth()+1).toString() + '.' +  d.getFullYear().toString()
+     + ' - ' + ((d.getHours()<10?'0':'').toString() + d.getHours().toString()) + ':' + ((d.getMinutes()<10?'0':'').toString() + d.getMinutes().toString());
+}
+
+
+//Gesamtsummentabelle erstellen
+function buildLog(log) {
+  
+  var loglist = $('#loglist');
+  loglist.empty();                     
+  
+  //Ueberschrift
+  loglist.append('<tr><th>Meldung am</th> <th>Meldung</th></tr>');
+  //Werte
+  for (var i = 0; i < log.length; i++) {
+    loglist.append('<tr> <td>' + log[i][0] + '</td>' + '<td>' + log[i][1] + '</td> </tr>');
+  }
+}
+</script>

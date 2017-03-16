@@ -1,0 +1,107 @@
+<!--
+
+Copyright 2017 Lars Bremer
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+//    Dynamische Daten fue Site mit Einsatzkräften im Einsatz laden und Tabellen erstellen          //
+//                                                                                                  //
+//     V1.0      2017-02-27     LB     Initiale Version zum internen Test                           //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+
+<!DOCTYPE html>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script>
+//Beim Seite Laden beide Listen erstellen
+$(function() {
+  google.script.run.withSuccessHandler(buildSummary).getSummaryOnDuty();
+  google.script.run.withSuccessHandler(buildList).getListOnDuty();
+  TimeStamp();
+
+  //Alle 10 Sekunden Daten neu laden
+  setInterval(function(){
+    google.script.run.withSuccessHandler(buildSummary).getSummaryOnDuty();
+    google.script.run.withSuccessHandler(buildList).getListOnDuty();
+    TimeStamp();
+  }, 10000);
+});
+
+
+//Zeitstempel fuer Stand der Daten aktualisieren
+function TimeStamp() {
+
+  var d = new Date();
+  //Zeitangabe selbst zusammenbauen, Monate und Stunden/Minuten korrigieren
+  document.getElementById("timestamp").innerHTML =  d.getDate().toString() + '.' +  (d.getMonth()+1).toString() + '.' +  d.getFullYear().toString()
+     + ' - ' + ((d.getHours()<10?'0':'').toString() + d.getHours().toString()) + ':' + ((d.getMinutes()<10?'0':'').toString() + d.getMinutes().toString());
+}
+
+
+//Auf Anforderung alle S3 Stati auf S3 zuruecksetzen
+function clearonduty() {
+
+  google.script.run.withSuccessHandler(changepage).resetS3();
+}
+
+
+//Nach erfolgreichem zuruecksetzen der Stati auf Bereitschaftsseite springen
+function changepage(URL) {
+
+  window.top.location.href = URL;
+}
+
+
+//Gesamtsummentabelle erstellen
+function buildSummary(summary) {
+  
+  var sumlist = $('#ondutysummary');
+  sumlist.empty();                     
+  //Ueberschrift
+  sumlist.append('<tr><th>Gesamt bestätigt</th>' + 
+                 '<th>MA</th>' + 
+                 '<th>PA</th>' + 
+                 '<th>S2</th>' + 
+                 '<th>MA</th>' + 
+                 '<th>PA</th></tr>');
+  //Werte
+  sumlist.append('<tr><td class="bignr S3">' + summary[0][1] + '</td>' + 
+                 '<td class="bignr MAPAS3">' + summary[1][1] + '</td>' + 
+                 '<td class="bignr MAPAS3">' + summary[2][1] + '</td>' + 
+                 '<td class="bignr S2">' + summary[0][2] + '</td>' + 
+                 '<td class="bignr MAPAS2">' + summary[1][2] + '</td>' + 
+                 '<td class="bignr MAPAS2">' + summary[2][2] + '</td></tr>');
+}
+
+
+//Namensliste erstellen
+function buildList(ondutylist) {
+  
+  var listonduty = $('#ondutylist');
+  listonduty.empty();
+  //Ueberschrift
+  listonduty.append('<tr><th>Name</th><th>MA</th><th>PA</th><th>Meldung um</th></tr>');
+  //Werte
+  for (var i = 0; i < ondutylist.length; i++) {
+    //Reihen in entsprechender Farbe
+    listonduty.append('<tr class="S3"> <td class="name">' + ondutylist[i][0] + '</td>' +
+                            '<td>' + ondutylist[i][1] + '</td>' +
+                            '<td>' + ondutylist[i][2] + '</td>' +
+                            '<td>' + ondutylist[i][3] + '</td> </tr>');
+  }
+}
+</script>

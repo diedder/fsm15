@@ -1,0 +1,99 @@
+<!--
+
+Copyright 2017 Lars Bremer
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+//    Dynamische Daten fue Site mit Einsatzbereitschaft laden und Tabellen erstellen                //
+//                                                                                                  //
+//     V1.0      2017-02-27     LB     Initiale Version zum internen Test                           //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+
+<!DOCTYPE html>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script>
+//Beim Seite Laden beide Listen erstellen
+$(function() {
+  google.script.run.withSuccessHandler(buildSummary).getSummaryStandby();
+  google.script.run.withSuccessHandler(buildList).getListStandby();
+  TimeStamp();
+
+  //Alle 10 Sekunden Daten neu laden
+  setInterval(function(){
+    google.script.run.withSuccessHandler(buildSummary).getSummaryStandby();
+    google.script.run.withSuccessHandler(buildList).getListStandby();
+    TimeStamp();
+  }, 10000);
+});
+
+
+//Zeitstempel fuer Stand der Daten aktualisieren
+function TimeStamp() {
+
+  var d = new Date();
+  //Zeitangabe selbst zusammenbauen, Monate und Stunden/Minuten korrigieren
+  document.getElementById("timestamp").innerHTML =  d.getDate().toString() + '.' +  (d.getMonth()+1).toString() + '.' +  d.getFullYear().toString()
+     + ' - ' + ((d.getHours()<10?'0':'').toString() + d.getHours().toString()) + ':' + ((d.getMinutes()<10?'0':'').toString() + d.getMinutes().toString());
+}
+
+
+//Gesamtsummentabelle erstellen
+function buildSummary(summary) {
+  
+  var sumlist = $('#standbysummary');
+  sumlist.empty();                     
+  //Ueberschrift
+  sumlist.append('<tr><th>Gesamt außer Dienst</th>' + 
+                 '<th>Gesamt einsatzbereit</th>' + 
+                 '<th>MA einsatzbereit</th>' + 
+                 '<th>PA einsatzbereit</th></tr>');
+  //Werte
+  sumlist.append('<tr><td class="bignr S6">' + summary[0][1] + '</td>' + 
+                 '<td class="bignr S2">' + summary[1][1] + '</td>' + 
+                 '<td class="bignr MAPAS2">' + summary[1][2] + '</td>' + 
+                 '<td class="bignr MAPAS2">' + summary[1][3] + '</td></tr>');
+}
+
+
+//Namensliste erstellen
+function buildList(standbylist) {
+  
+  var liststandby = $('#standbylist');
+  liststandby.empty();
+  //Ueberschrift
+  liststandby.append('<tr><th>Name</th><th>Status</th><th>MA</th><th>PA</th><th>Letzte Meldung</th></tr>');
+  //Werte
+  for (var i = 0; i < standbylist.length; i++) {
+    //Reihen in entsprechender Farbe
+    if (standbylist[i][1] == 'S2') {
+       liststandby.append('<tr class="S2"> <td class="name">' + standbylist[i][0] + '</td>' +
+                            '<td>' + standbylist[i][1] + '</td>' +
+                            '<td>' + standbylist[i][2] + '</td>' +
+                            '<td>' + standbylist[i][3] + '</td>' +
+                            '<td>' + standbylist[i][4] + '</td> </tr>');
+    }
+    if (standbylist[i][1] == 'S6') {
+       liststandby.append('<tr class="S6"> <td class="name">' + standbylist[i][0] + '</td>' +
+                            '<td>' + standbylist[i][1] + '</td>' +
+                            '<td>' + standbylist[i][2] + '</td>' +
+                            '<td>' + standbylist[i][3] + '</td>' +
+                            '<td>' + standbylist[i][4] + '</td> </tr>');
+    }
+  }
+}
+</script>

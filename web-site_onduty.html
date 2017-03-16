@@ -1,0 +1,82 @@
+<!--
+
+Copyright 2017 Lars Bremer
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+//    Website mit Listen und Uebersicht der Kraefte im Einsatz                                      //
+//                                                                                                  //
+//     V1.0      2017-02-27     LB     Initiale Version zum internen Test                           //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <!--Stylesheet-->
+    <?!= HtmlService.createHtmlOutputFromFile('web-site_stylesheet').getContent(); ?>
+  </head>
+  
+  <body class="onduty">
+    <h1>
+    <?!= PropertiesService.getScriptProperties().getProperty('Name'); ?> 
+     - Übersicht Einsatz Bestätigt
+    </h1>
+    
+    <ul class="menu">
+      <li class="menu"><a href="<?!= getWebUrl() + '?page=standby'; ?>">Einsatzbereitschaft</a></li>
+      <li class="menu"><a class="active" href="<?!= getWebUrl() + '?page=onduty' ?>">Im Einsatz</a></li>
+      <li class="menu"><a href="<?!= getWebUrl() + '?page=log' ?>">Statusprotokoll</a></li>
+    </ul>
+    
+    <h2>Gesamtübersicht Stand <span id="timestamp">STAND</span></h2>
+     
+    <h3>Gesamtsummen bestätigte Einsatzkräfte:</h3>
+    
+    <div>
+    <table id="ondutysummary">
+      <td class="tmp">Lade Daten...</td>
+    </table>
+    
+    <button class="reset" type="button" id="reset" onclick="return clearonduty();">
+    Einsatz beenden
+    </button>
+    </div>
+    
+    <h3>Bestätigte Einsatzkräfte:</h3>
+    <div style="overflow-y:auto;">
+      <table id="ondutylist">
+        <td class="tmp">Lade Daten...</td>
+      </table>
+    </div>
+  
+    <!--Fusszeile mit Name-->
+    <p id="footer">
+      Erzeugt durch 
+      <?!= PropertiesService.getScriptProperties().getProperty('Name'); ?> 
+    </p>
+    
+    <!--LIZENZBEDINGUNG - DARF NICHT ENTFERNT WERDEN ! BEGINN -->
+    <p id="TM">
+      <b>FSM15</b> - nach einer Idee von Diedder aus <a href="http://www.ff-appen.de">Appen</a>
+    </p>
+    <!--LIZENZBEDINGUNG - DARF NICHT ENTFERNT WERDEN ! ENDE -->
+  
+  <!--dynamische Daten der Tabelle laden-->
+  <?!= HtmlService.createHtmlOutputFromFile('web-site_ondutyscript').getContent(); ?> 
+  </body>
+</html>
